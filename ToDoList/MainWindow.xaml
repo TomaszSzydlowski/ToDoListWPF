@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ToDoList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="To Do:" Height="450" SizeToContent="Width" ResizeMode="CanMinimize" WindowStyle="ToolWindow" Icon="icon.ico">
     <Grid>
-        
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,28,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Label Content="New task" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top"/>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox HorizontalAlignment="Left" Height="264" Margin="10,124,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="211"/>
+        <Label Content="ToDo List:" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top"/>
+
     </Grid>
 </Window>
