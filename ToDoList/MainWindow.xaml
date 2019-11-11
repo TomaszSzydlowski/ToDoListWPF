@@ -1,7 +1,7 @@
 ﻿<Window x:Class="ToDoListApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="To Do:" Height="450" SizeToContent="Width" ResizeMode="CanMinimize" WindowStyle="ToolWindow" Icon="icon.ico" MinWidth="250">
+        Title="To Do:" Height="450" SizeToContent="Width" ResizeMode="CanMinimize" WindowStyle="ToolWindow" Icon="icon.ico" MinWidth="250" Closing="MainWindow_OnClosing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

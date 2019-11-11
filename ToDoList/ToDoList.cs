@@ -55,5 +55,12 @@ namespace ToDoListApp
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public void Save()
+        {
+            var asr = new AppSettingsReader();
+            var toDoSaveFile = asr.GetValue("toDoSaveFile", typeof(string)).ToString();
+            _toDoList.Save(toDoSaveFile);
+        }
     }
 }
