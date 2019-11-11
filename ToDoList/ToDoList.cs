@@ -62,5 +62,13 @@ namespace ToDoListApp
             var toDoSaveFile = asr.GetValue("toDoSaveFile", typeof(string)).ToString();
             _toDoList.Save(toDoSaveFile);
         }
+
+        public void DeleteItem(ToDoItem item)
+        {
+            _items.Remove(item);
+            item.ToDo.Remove();
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Items"));
+        }
     }
 }

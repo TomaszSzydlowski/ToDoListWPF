@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -61,6 +62,20 @@ namespace ToDoListApp
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
             toDoList.Save();
+        }
+
+        private void MenuItem_OnClickDelete(object sender, RoutedEventArgs e)
+        {
+            if (ListViewToDo.SelectedItem != null)
+            {
+                var deleteBoxResult = MessageBox.Show("Delete this item?", "Delete?",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+                if (deleteBoxResult == MessageBoxResult.Yes)
+                {
+                    toDoList.DeleteItem(ListViewToDo.SelectedItem as ToDoItem);
+                }
+                ListViewToDo.Items.Refresh();
+            }
         }
     }
 }

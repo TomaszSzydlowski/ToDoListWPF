@@ -5,7 +5,7 @@ using System.Xml.Linq;
 namespace ToDoListApp
 {
     [Serializable]
-    public class ToDoItem:INotifyPropertyChanged
+    public class ToDoItem : INotifyPropertyChanged
     {
         private XElement _todo;
         internal XElement ToDo { get { return _todo; } }
@@ -20,10 +20,7 @@ namespace ToDoListApp
             set
             {
                 ToDo.Element("description").Value = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("Description"));
-                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Description"));
             }
         }
 
@@ -39,10 +36,7 @@ namespace ToDoListApp
 
                 ToDo.Element("donedatetime").Value = value;
 
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("DoneDateTime"));
-                }
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DoneDateTime"));
             }
         }
 
