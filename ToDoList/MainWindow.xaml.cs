@@ -66,6 +66,11 @@ namespace ToDoListApp
 
         private void MenuItem_OnClickDelete(object sender, RoutedEventArgs e)
         {
+            DeleteTask();
+        }
+
+        private void DeleteTask()
+        {
             if (ListViewToDo.SelectedItem != null)
             {
                 var deleteBoxResult = MessageBox.Show("Delete this item?", "Delete?",
@@ -74,7 +79,16 @@ namespace ToDoListApp
                 {
                     toDoList.DeleteItem(ListViewToDo.SelectedItem as ToDoItem);
                 }
+
                 ListViewToDo.Items.Refresh();
+            }
+        }
+
+        private void ListViewToDo_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                DeleteTask();
             }
         }
     }
