@@ -22,7 +22,7 @@
         <ListView Name="ListViewToDo" VerticalAlignment="Stretch"  Grid.Row="2" Grid.ColumnSpan="2" ContextMenu="{StaticResource ItemMenu}" ItemsSource="{Binding Path=Items}" FontFamily="Segoe UI Semilight" KeyDown="ListViewToDo_OnKeyDown" MouseDoubleClick="ListViewToDo_OnMouseDoubleClick"></ListView>
         <TextBox Name="TextItemDesc" Grid.Column="0" Grid.Row="0" Text="New task" MinWidth="100" GotFocus="TextItemDesc_OnGotFocus" PreviewMouseDown="TextItemDesc_PreviewMouseDown" KeyDown="TextItemDesc_OnKeyDown" MinHeight="30" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="4" Width="244" VerticalContentAlignment="Center" FontSize="14" FontFamily="Segoe UI Semilight"/>
         <Button Content="Add" Grid.Row="0" HorizontalAlignment="right" Grid.Column="1" Name="BtnAdd" Click="btnAdd_Click" MinWidth="50" Height="20" VerticalAlignment="Top" MinHeight="30" FontFamily="Segoe UI Semilight" />
-        <CheckBox x:Name="CheckShowDone" Grid.Column="0" Grid.Row="1" Content="Show done items" FontFamily="Segoe UI Semilight" Padding="4,0,0,0" Margin="6,0,0,0"/>
+        <CheckBox x:Name="CheckShowDone" Grid.Column="0" Grid.Row="1" Content="Show done items"  FontFamily="Segoe UI Semilight" Padding="4,0,0,0" Margin="6,0,0,0" IsChecked="{Binding Path=ShowDoneItems, Mode=TwoWay}" />
     </Grid>
 </Window>
     

@@ -17,9 +17,22 @@ namespace ToDoListApp
         [NonSerialized]
         private List<ToDoItem> _items;
 
+        [NonSerialized]
+        private bool _showDoneItems;
+
         public List<ToDoItem> Items
         {
-            get { return _items; }
+            get
+            {
+                if (_showDoneItems)
+                {
+                    return _items;
+                }
+
+                return (from i in _items
+                        where i.DoneDateTime == ""
+                        select i).ToList();
+            }
         }
 
         public ToDoList()
@@ -34,18 +47,30 @@ namespace ToDoListApp
             }
             else
             {
-                _toDoList=new XDocument();
+                _toDoList = new XDocument();
                 _toDoList.Add(new XElement("todolist"));
-                _items=new List<ToDoItem>();
+                _items = new List<ToDoItem>();
+            }
+        }
+
+        public bool ShowDoneItems
+        {
+            get => _showDoneItems;
+            set
+            {
+                _showDoneItems = value;
+                if (PropertyChanged == null) return;
+                PropertyChanged(this, new PropertyChangedEventArgs("ShowDoneItems"));
+                PropertyChanged(this, new PropertyChangedEventArgs("Items"));
             }
         }
 
         public void AddItem(string desciption)
         {
             var item = new XElement("todo");
-            var createAt = new XElement("createDateTime") {Value = DateTime.Now.ToString("yyyy-MM-ddThh:mm:ss.ms")};
+            var createAt = new XElement("createDateTime") { Value = DateTime.Now.ToString("yyyy-MM-ddThh:mm:ss.ms") };
             item.Add(createAt);
-            var descriptionElement = new XElement("description") {Value = desciption};
+            var descriptionElement = new XElement("description") { Value = desciption };
             item.Add(descriptionElement);
 
             _toDoList.Root?.Add(item);
