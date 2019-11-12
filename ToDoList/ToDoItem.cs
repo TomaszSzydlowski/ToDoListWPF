@@ -7,6 +7,7 @@ namespace ToDoListApp
     [Serializable]
     public class ToDoItem : INotifyPropertyChanged
     {
+        private const string Donedatetime = "donedatetime";
         private XElement _todo;
         internal XElement ToDo { get { return _todo; } }
         internal ToDoItem(XElement todo)
@@ -16,25 +17,26 @@ namespace ToDoListApp
 
         public string Description
         {
-            get { return ToDo.Element("description").Value; }
+
+            get => ToDo.Element("description")?.Value;
             set
             {
-                ToDo.Element("description").Value = value;
+                if (ToDo != null) ToDo.Element("description").Value = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Description"));
             }
         }
 
         public string DoneDateTime
         {
-            get { return ToDo.Element("donedatetime") == null ? "" : ToDo.Element("donedatetime").Value; }
+            get => ToDo.Element(Donedatetime) == null ? "" : ToDo.Element(Donedatetime)?.Value;
             set
             {
-                if (ToDo.Element("donedatetime") == null)
+                if (ToDo.Element(Donedatetime) == null)
                 {
-                    ToDo.Add(new XElement("donedatetime"));
+                    ToDo.Add(new XElement(Donedatetime));
                 }
 
-                ToDo.Element("donedatetime").Value = value;
+                ToDo.Element(Donedatetime).Value = value;
 
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("DoneDateTime"));
             }
@@ -43,10 +45,10 @@ namespace ToDoListApp
         public override string ToString()
         {
             string result;
-            if (DoneDateTime != "")
+            if (!string.IsNullOrEmpty(DoneDateTime))
             {
-                DateTime doneAt = DateTime.Parse(DoneDateTime);
-                result = String.Format("{0} - Done at: {1:yyyy-MM-dd hh:mm}", Description, doneAt);
+                var doneAt = DateTime.Parse(DoneDateTime);
+                result = $"{Description} - Done at: {doneAt:yyyy-MM-dd hh:mm}";
             }
             else
             {

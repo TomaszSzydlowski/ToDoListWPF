@@ -11,12 +11,12 @@ namespace ToDoListApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ToDoList toDoList = new ToDoList();
+        private ToDoList ToDoList = new ToDoList();
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = toDoList;
+            DataContext = ToDoList;
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -44,7 +44,7 @@ namespace ToDoListApp
             var itemDescription = TextItemDesc.Text.Trim();
             if (!string.IsNullOrEmpty(itemDescription))
             {
-                toDoList.AddItem(itemDescription);
+                ToDoList.AddItem(itemDescription);
             }
 
             TextItemDesc.Text = "";
@@ -61,7 +61,7 @@ namespace ToDoListApp
 
         private void MainWindow_OnClosing(object sender, CancelEventArgs e)
         {
-            toDoList.Save();
+            ToDoList.Save();
         }
 
         private void MenuItem_OnClickDelete(object sender, RoutedEventArgs e)
@@ -71,17 +71,15 @@ namespace ToDoListApp
 
         private void DeleteTask()
         {
-            if (ListViewToDo.SelectedItem != null)
+            if (ListViewToDo.SelectedItem == null) return;
+            var deleteBoxResult = MessageBox.Show("Delete this item?", "Delete?",
+                MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if (deleteBoxResult == MessageBoxResult.Yes)
             {
-                var deleteBoxResult = MessageBox.Show("Delete this item?", "Delete?",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-                if (deleteBoxResult == MessageBoxResult.Yes)
-                {
-                    toDoList.DeleteItem(ListViewToDo.SelectedItem as ToDoItem);
-                }
-
-                ListViewToDo.Items.Refresh();
+                ToDoList.DeleteItem(ListViewToDo.SelectedItem as ToDoItem);
             }
+
+            ListViewToDo.Items.Refresh();
         }
 
         private void ListViewToDo_OnKeyDown(object sender, KeyEventArgs e)
@@ -89,6 +87,44 @@ namespace ToDoListApp
             if (e.Key == Key.Delete)
             {
                 DeleteTask();
+            }
+        }
+
+        private void MenuItem_OnClickDone(object sender, RoutedEventArgs e)
+        {
+            MarkAsDone();
+        }
+
+        private void MarkAsDone()
+        {
+            if (ListViewToDo.SelectedItem == null) return;
+            var doneBoxResult = MessageBox.Show("Mark this as done ? ", "Done ? ", MessageBoxButton.YesNo,
+                MessageBoxImage.Question, MessageBoxResult.No);
+            if (doneBoxResult == MessageBoxResult.Yes)
+            {
+                ((ToDoItem) ListViewToDo.SelectedItem).DoneDateTime = DateTime.Now.ToString("g");
+            }
+
+            ListViewToDo.Items.Refresh();
+        }
+
+        private void ListViewToDo_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            MarkAsDone();
+        }
+
+        private void MenuItem_OnClickEdit(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = ListViewToDo.SelectedItem;
+
+            if (selectedItem != null)
+            {
+                var description = ((ToDoItem)selectedItem).Description;
+                TextItemDesc.Text = description;
+                ToDoList.DeleteItem((ToDoItem)selectedItem);
+                ListViewToDo.Items.Refresh();
+                TextItemDesc.Focus();
+
             }
         }
     }

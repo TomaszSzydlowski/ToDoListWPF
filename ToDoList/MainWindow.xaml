@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="To Do:" Height="550" SizeToContent="Width" ResizeMode="CanMinimize" WindowStyle="ToolWindow" Icon="icon.ico" MinWidth="100" Closing="MainWindow_OnClosing" Width="300" MinHeight="150">
     <Window.Resources>
-        <ContextMenu x:Key="itemMenu">
+        <ContextMenu x:Key="ItemMenu">
+            <MenuItem Header="_Done" Click="MenuItem_OnClickDone"/>
+            <MenuItem Header="_Edit" Click="MenuItem_OnClickEdit"/>
             <MenuItem Header="_Delete" Click="MenuItem_OnClickDelete"/>
         </ContextMenu>
     </Window.Resources>
@@ -17,7 +19,7 @@
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <ListView Name="ListViewToDo" VerticalAlignment="Stretch"  Grid.Row="2" Grid.ColumnSpan="2" ContextMenu="{StaticResource itemMenu}" ItemsSource="{Binding Path=Items}" FontFamily="Segoe UI Semilight" KeyDown="ListViewToDo_OnKeyDown"></ListView>
+        <ListView Name="ListViewToDo" VerticalAlignment="Stretch"  Grid.Row="2" Grid.ColumnSpan="2" ContextMenu="{StaticResource ItemMenu}" ItemsSource="{Binding Path=Items}" FontFamily="Segoe UI Semilight" KeyDown="ListViewToDo_OnKeyDown" MouseDoubleClick="ListViewToDo_OnMouseDoubleClick"></ListView>
         <TextBox Name="TextItemDesc" Grid.Column="0" Grid.Row="0" Text="New task" MinWidth="100" GotFocus="TextItemDesc_OnGotFocus" PreviewMouseDown="TextItemDesc_PreviewMouseDown" KeyDown="TextItemDesc_OnKeyDown" MinHeight="30" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="4" Width="244" VerticalContentAlignment="Center" FontSize="14" FontFamily="Segoe UI Semilight"/>
         <Button Content="Add" Grid.Row="0" HorizontalAlignment="right" Grid.Column="1" Name="BtnAdd" Click="btnAdd_Click" MinWidth="50" Height="20" VerticalAlignment="Top" MinHeight="30" FontFamily="Segoe UI Semilight" />
         <CheckBox x:Name="CheckShowDone" Grid.Column="0" Grid.Row="1" Content="Show done items" FontFamily="Segoe UI Semilight" Padding="4,0,0,0" Margin="6,0,0,0"/>
